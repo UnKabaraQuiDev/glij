@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>lu.kbra.glij</groupId>
+		<artifactId>glij-eclipse-parent</artifactId>
+		<version>${eclipse-plugin-revision}</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<artifactId>lu.kbra.glij.eclipse</artifactId>
+	<packaging>eclipse-plugin</packaging>
+	<name>GLiJ Eclipse Plug-in</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>javapoet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>lu.kbra.glij</groupId>
+			<artifactId>glij-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>lu.kbra.glij</groupId>
+			<artifactId>glij-binding-spi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>lu.kbra.glij</groupId>
+			<artifactId>glij-compiler</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>lu.kbra.glij</groupId>
+			<artifactId>glij-engine-adapter</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.7.1</version>
+				<executions>
+					<execution>
+						<id>embed-glij-compiler</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeGroupIds>lu.kbra.glij,com.squareup</includeGroupIds>
+							<includeArtifactIds>
+								glij-api,glij-binding-spi,glij-compiler,glij-engine-adapter,javapoet</includeArtifactIds>
+							<excludeTransitive>true</excludeTransitive>
+							<outputDirectory>${project.basedir}/lib</outputDirectory>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}/lib</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

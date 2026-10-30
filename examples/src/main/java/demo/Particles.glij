@@ -1,0 +1,36 @@
+package demo;
+
+import org.joml.Vector3i;
+import lu.kbra.glij.api.GlCompute;
+import lu.kbra.glij.api.LocalSize;
+import lu.kbra.glij.api.Blocking;
+import lu.kbra.glij.api.GroupSize;
+import lu.kbra.glij.api.Uniform;
+import lu.kbra.glij.api.Layout;
+import lu.kbra.glij.api.Access;
+import lu.kbra.glij.api.AccessMode;
+import lu.kbra.glij.api.Semaphore;
+import lu.kbra.standalone.gameengine.cache.CacheManager;
+import lu.kbra.standalone.gameengine.cache.attrib.FloatAttribArray;
+
+public class Particles {
+    private final CacheManager cacheManager;
+
+    public Particles(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
+
+    @GlCompute(version = 460)
+    @LocalSize(x = 128)
+    @lu.kbra.glij.api.CacheManager("cacheManager")
+    public Semaphore doubleValues(@Blocking boolean block, @GroupSize Vector3i groups,
+                                   @Layout("std430") @Access(AccessMode.READ_ONLY) FloatAttribArray input,
+                                   @Uniform int count,
+                                   @Layout("std430") @Access(AccessMode.WRITE_ONLY) FloatAttribArray output) {
+        void main() {
+            uint i = gl_GlobalInvocationID.x;
+            if (i >= uint(count)) return;
+            output[i] = input[i] * 2.0;
+        }
+    }
+}

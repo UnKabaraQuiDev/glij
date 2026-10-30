@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="lu.kbra.glij.eclipse.feature"
+         label="GLiJ for Eclipse"
+         version="0.1.0.qualifier"
+         provider-name="UnKabaraQuiDev">
+  <description>GLiJ editor and builder for embedded GLSL in Java source.</description>
+  <plugin id="lu.kbra.glij.eclipse"
+          download-size="0" install-size="0"
+          version="0.0.0" unpack="false"/>
+</feature>

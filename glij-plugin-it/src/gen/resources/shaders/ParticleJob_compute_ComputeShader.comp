@@ -1,0 +1,15 @@
+#version 460 core
+float square(float value) {
+return value * value;
+}
+
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+layout(std430, binding = 0) readonly buffer InputBuffer { float poly_input[]; };
+layout(std430, binding = 1) writeonly buffer OutputBuffer { float poly_output[]; };
+uniform int count;
+
+void main() {
+            uint id = gl_GlobalInvocationID.x;
+            if (id >= uint(count)) return;
+            poly_output[id] = square(poly_input[id]);
+        }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <!-- JDT editor chrome and Java syntax coloring are reused; GLSL is an overlay.
+       A private generated-Java working copy backs Java completion, imports and diagnostics. -->
+  <extension point="org.eclipse.core.contenttype.contentTypes">
+    <content-type id="source" name="GLiJ source" base-type="org.eclipse.core.runtime.text" file-extensions="glij"/>
+  </extension>
+  <extension point="org.eclipse.ui.editors">
+    <editor id="lu.kbra.glij.eclipse.editor" name="GLiJ" extensions="glij"
+            class="lu.kbra.glij.eclipse.editor.GLiJEditor"
+            contributorClass="org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditorActionContributor" default="true"/>
+  </extension>
+  <extension point="org.eclipse.core.resources.builders" id="builder" name="GLiJ source generator">
+    <builder hasNature="true"><run class="lu.kbra.glij.eclipse.build.GLiJBuilder"/></builder>
+  </extension>
+  <extension point="org.eclipse.core.resources.natures" id="nature" name="GLiJ">
+    <runtime><run class="lu.kbra.glij.eclipse.build.GLiJNature"/></runtime>
+    <requires-nature id="org.eclipse.jdt.core.javanature"/>
+    <builder id="lu.kbra.glij.eclipse.builder"/>
+  </extension>
+  <extension point="org.eclipse.core.resources.markers" id="problem" name="GLiJ compiler problems">
+    <super type="org.eclipse.core.resources.problemmarker"/>
+    <persistent value="true"/>
+  </extension>
+  <extension point="org.eclipse.ui.popupMenus">
+    <objectContribution id="lu.kbra.glij.eclipse.projectMenu" objectClass="org.eclipse.core.resources.IProject" adaptable="true">
+      <action id="lu.kbra.glij.eclipse.enable" label="Enable GLiJ" menubarPath="additions"
+              class="lu.kbra.glij.eclipse.build.EnableGLiJAction"/>
+    </objectContribution>
+  </extension>
+  <extension point="org.eclipse.ui.preferencePages">
+    <page id="lu.kbra.glij.eclipse.preferences" name="GLiJ"
+          class="lu.kbra.glij.eclipse.editor.GLiJPreferencesPage"/>
+  </extension>
+</plugin>

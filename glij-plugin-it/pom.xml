@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>lu.kbra.glij</groupId>
+		<artifactId>glij</artifactId>
+		<version>${revision}</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<artifactId>glij-plugin-it</artifactId>
+	<name>glij-plugin-it (Maven consumer integration tests)</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>lu.kbra.glij</groupId>
+			<artifactId>glij-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>lu.kbra.glij</groupId>
+						<artifactId>glij-test-bindings</artifactId>
+						<version>${revision}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<fileExtensions>glij,gpujava</fileExtensions>
+					<directories>
+						<directory>
+							<source>${project.basedir}/src/main/java</source>
+							<output>${project.basedir}/src/gen/java</output>
+							<fileExtensions>glij,gpujava</fileExtensions>
+						</directory>
+						<directory>
+							<source>${project.basedir}/src/secondary/java</source>
+							<output>${project.basedir}/src/gen/secondary/java</output>
+							<fileExtensions>gpujava</fileExtensions>
+						</directory>
+					</directories>
+					<generatedResourcesDirectory>
+						${project.basedir}/src/gen/resources</generatedResourcesDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>compile-glij</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

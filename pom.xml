@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>lu.kbra.glij</groupId>
+	<artifactId>glij</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>GLiJ Reactor</name>
+
+	<modules>
+		<module>glij-api</module>
+		<module>glij-binding-spi</module>
+		<module>glij-compiler</module>
+		<module>glij-engine-adapter</module>
+		<module>glij-maven-plugin</module>
+		<module>glij-tests</module>
+		<module>glij-test-bindings</module>
+		<module>glij-plugin-it</module>
+		<module>glij-eclipse-plugin</module>
+	</modules>
+
+	<properties>
+		<version>0.1.0</version>
+		<revision>${version}-SNAPSHOT</revision>
+		<eclipse-plugin-revision>${version}-SNAPSHOT</eclipse-plugin-revision>
+
+		<maven.compiler.release>21</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>5.11.4</junit.version>
+		<gameengine.version>0.2-SNAPSHOT</gameengine.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>nexus.kbra.lu-public</id>
+			<url>https://nexus.kbra.lu/repository/maven-public/</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.squareup</groupId>
+				<artifactId>javapoet</artifactId>
+				<version>1.13.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-api</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-binding-spi</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-compiler</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-engine-adapter</artifactId>
+				<version>${revision}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>lu.kbra</groupId>
+				<artifactId>gameengine</artifactId>
+				<version>${gameengine.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-tests</artifactId>
+				<version>${revision}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-test-bindings</artifactId>
+				<version>${revision}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>lu.kbra.glij</groupId>
+				<artifactId>glij-plugin-it</artifactId>
+				<version>${revision}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>lu.kbra.glij</groupId>
+					<artifactId>glij-maven-plugin</artifactId>
+					<version>${revision}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.13.0</version>
+					<configuration>
+						<release>21</release>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.5.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.15.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

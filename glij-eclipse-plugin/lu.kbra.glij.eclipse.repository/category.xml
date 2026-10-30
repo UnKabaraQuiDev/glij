@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+  <feature url="features/lu.kbra.glij.eclipse.feature_0.1.0.qualifier.jar"
+           id="lu.kbra.glij.eclipse.feature" version="0.1.0.qualifier">
+    <category name="glij"/>
+  </feature>
+  <category-def name="glij" label="GLiJ"/>
+</site>

@@ -1,0 +1,30 @@
+package demo;
+
+import lu.kbra.glij.api.GlRender;
+import lu.kbra.glij.api.Uniform;
+import lu.kbra.standalone.gameengine.cache.CacheManager;
+import lu.kbra.standalone.gameengine.geom.Mesh;
+
+public class ColorRenderer {
+    private final CacheManager cacheManager;
+
+    public ColorRenderer(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
+
+    @GlRender(version = 460)
+    @lu.kbra.glij.api.CacheManager("cacheManager")
+    public void render(Mesh mesh, @Uniform float brightness) {
+        vertex(@AttributeLocation(0) in vec3 position, out vec3 brightnessColor): {
+            void main() {
+                gl_Position = vec4(position, 1.0);
+                brightnessColor = vec3(brightness);
+            }
+        }
+        fragment(in vec3 brightnessColor, @AttributeLocation(0) out vec4 fragColor): {
+            void main() {
+                fragColor = vec4(brightnessColor, 1.0);
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+package demo;
+
+import lu.kbra.glij.api.*;
+import lu.kbra.standalone.gameengine.cache.CacheManager;
+import lu.kbra.standalone.gameengine.geom.Mesh;
+
+public final class SceneJob {
+
+	private final CacheManager cacheManager = new CacheManager();
+
+	@GlRender(version=460)
+    @ShaderCache("cacheManager")
+    public void draw(Mesh mesh, CustomResource custom, @Uniform ImageResource image, @Uniform float brightness) {
+        vertex(@AttributeLocation(0) in vec3 position, out vec3 shade): {
+            void main() { 
+                gl_Position = vec4(position, 1.0);
+                shade = vec3(brightness) + texture(image, vec2(0.5)).rgb;
+            }
+        }
+        fragment(in vec3 shade, @AttributeLocation(0) out vec4 color): {
+            void main() {
+                color = vec4(shade, 1.0);
+            }
+        }
+    }
+
+}
